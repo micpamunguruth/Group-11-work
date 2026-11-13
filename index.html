@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meeting and Event Resource Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="top-bar">
+        <header class="site">
+            <h1>Meeting and Events Resources</h1>
+            <p>Find a venue, reserve resources, and spot clashes before you submit your plan.</p>
+        </header>
+        <nav aria-label="Main sections">
+            <a href="#venues">Venues</a>
+            <a href="#resources">Resources</a>
+            <a href="#plan">Plan an event</a>
+            <a href="#schedule">Schedule</a>
+        </nav>
+    </div>
+    <main>
+        <section id="venues" aria-labelledby="venues-h">
+            <h2 id="venues-h">Venues</h2>
+            <form class="filter" id="venuefilter" role="search" aria-label="Filter venues" onsubmit="return false;">
+                <div>
+                    <label for="vSearch">Search venues:</label>
+                    <input type="search" id="vSearch" placeholder="Name or location..." />
+                </div>
+                <div>
+                    <label for="vType">Type:</label>
+                    <select id="vType">
+                        <option value="">All Types</option>
+                        <option>Conference</option>
+                        <option>Hall</option>
+                        <option>Outdoor</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="vCapacity">Minimum capacity:</label>
+                    <input type="number" id="vCap" min="0" placeholder="Minimum capacity..." />
+                </div>
+                <div>
+                    <label for="vAvail">Availability</label>
+                    <select id="vAvail">
+                        <option value="">Any</option>
+                        <option value="yes">Available</option>
+                        <option value="no">Unavailable</option>
+                    </select>
+                </div>
+                
+            </form>
+            <p id="venuecount" aria-live="polite" class="err"></p>
+            <div class="cards" id="venuecards"></div>
+        </section>
+
+
+        <section id="resources" aria-labelledby="res-h">
+            <h2 id="res-h">Resources</h2>
+            <form class="filters" onsubmit="return false;" aria-label="Filter-resources">
+                <div>
+                    <label for="rType">Type:</label>
+                    <select id="rType">
+                        <option value="">All Types</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="rStatus">Stock level:</label>
+                    <select id="rStatus">
+                        <option value="">Any</option>
+                        <option value="In-stock">In stock</option>
+                        <option value="Low-stock">Low stock</option>
+                    </select>
+                </div>
+            </form>
+            <div class="tablewrap">
+                <table>
+                    <caption class="err">Sample inventory held by the Estates Office</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">Resource</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Total units</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resBody"> </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <section id="plan" aria-labelledby="plan-h">
+            <h2 id="plan-h">Plan an Event</h2>
+            <div class="two-col">
+                <form class="panel" id="planform" novalidate>
+                    <div class="form-grid">
+                        <div>
+                            <label for="evName">Event Name:</label>
+                            <input type="text" id="evName" autocomplete="off" required />
+                            <p class="err" id="e-evName"></p>
+                        </div>
+                        <div>
+                            <label for="evEmail">Organiser Email:</label>
+                            <input type="email" id="evEmail" placeholder="club@example.edu" required>
+                            <p class="err" id="e-evEmail"></p>
+                        </div>
+                        <div>
+                            <label for="evAtt">Expected Attendance:</label>
+                            <input type="number" id="evAtt" min="1" max="1000" required>
+                            <p class="err" id="e-evAtt"></p>
+                        </div>
+                        <div>
+                            <label for="evVenue">Venue:</label>
+                            <select id="evVenue" required></select>
+                            <p class="err" id="e-evVenue"></p>
+                        </div>
+                        <div>
+                            <label for="evDate">Date:</label>
+                            <input type="date" id="evDate" required>
+                            <p class="err" id="e-evDate"></p>
+                        </div>
+                        <div>
+                            <label for="evStart">Start Time:</label>
+                            <input type="time" id="evStart" required>
+                            <p class="err" id="e-evStart"></p>
+                        </div>
+                        <div>
+                            <label for="evEnd">End Time:</label>
+                            <input type="time" id="evEnd" required>
+                            <p class="err" id="e-evEnd"></p>
+                        </div>
+                    </div>
+                    <fieldset>
+                        <legend>Optional extras</legend>
+                        <label>
+                            <input type="checkbox" name="extra" value="projector">Projector
+                        </label>
+                        <label>
+                            <input type="checkbox" name="extra" value="sound">Sound System
+                        </label>
+                        <label>
+                            <input type="checkbox" name="extra" value="tent">Tent (outdoor)
+                        </label>
+                        <label>
+                            <input type="checkbox" name="extra" value="podium">Podium
+                        </label>
+                    </fieldset>
+                    <p id="uoi">
+                        <button class="btn" type="submit">Check and Submit plan</button>
+                        <button class="btn alt" type="reset" id="resetBtn">Clear form</button>
+                    </p>
+                    <div id="planMsg" role="status" aria-live="polite"></div>
+                </form>
+                <div class="panel" aria-live="polite">
+                    <h3>Estimate requirements</h3>
+                    <p id="estIntro">Enter attendees and choose a venue to see what you will need.</p>
+                    <div class="table-wrap" id="estWrap" hidden>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Resource</th>
+                                    <th scope="col">Needed</th>
+                                    <th scope="col">In Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody id="estBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="schedule" aria-labelledby="sch-h">
+            <h2 id="sch-h">Schedule and conflicts</h2>
+            <div class="stats" id="stats"></div>
+            <div id="clashBox"></div>
+            <div class="tablewrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Ref</th>
+                            <th scope="col">Event</th>
+                            <th scope="col">Venue</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Attendees</th>
+                        </tr>
+                    </thead>
+                    <tbody id="schBody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Meeting and Event Resource Planner &copy; 2026</p>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
