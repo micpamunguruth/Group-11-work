@@ -22,7 +22,7 @@
     <main>
         <section id="venues" aria-labelledby="venues-h">
             <h2 id="venues-h">Venues</h2>
-            <form class="filter" id="venuefilter" role="search" aria-label="Filter venues" onsubmit="return false;">
+            <form class="filters" id="venueFilters" role="search" aria-label="Filter venues" onsubmit="return false;">
                 <div>
                     <label for="vSearch">Search venues:</label>
                     <input type="search" id="vSearch" placeholder="Name or location..." />
@@ -31,13 +31,13 @@
                     <label for="vType">Type:</label>
                     <select id="vType">
                         <option value="">All Types</option>
-                        <option>Conference</option>
                         <option>Hall</option>
+                        <option>Room</option>
                         <option>Outdoor</option>
                     </select>
                 </div>
                 <div>
-                    <label for="vCapacity">Minimum capacity:</label>
+                    <label for="vCap">Minimum capacity:</label>
                     <input type="number" id="vCap" min="0" placeholder="Minimum capacity..." />
                 </div>
                 <div>
@@ -48,16 +48,15 @@
                         <option value="no">Unavailable</option>
                     </select>
                 </div>
-                
             </form>
-            <p id="venuecount" aria-live="polite" class="err"></p>
-            <div class="cards" id="venuecards"></div>
+            <p id="venueCount" aria-live="polite"></p>
+            <div class="cards" id="venueCards"></div>
         </section>
 
 
         <section id="resources" aria-labelledby="res-h">
             <h2 id="res-h">Resources</h2>
-            <form class="filters" onsubmit="return false;" aria-label="Filter-resources">
+            <form class="filters" onsubmit="return false;" aria-label="Filter resources">
                 <div>
                     <label for="rType">Type:</label>
                     <select id="rType">
@@ -73,9 +72,9 @@
                     </select>
                 </div>
             </form>
-            <div class="tablewrap">
+            <div class="table-wrap">
                 <table>
-                    <caption class="err">Sample inventory held by the Estates Office</caption>
+                    <caption>Sample inventory held by the Estates Office</caption>
                     <thead>
                         <tr>
                             <th scope="col">Resource</th>
@@ -84,7 +83,7 @@
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="resBody"> </tbody>
+                    <tbody id="resBody"></tbody>
                 </table>
             </div>
         </section>
@@ -93,7 +92,7 @@
         <section id="plan" aria-labelledby="plan-h">
             <h2 id="plan-h">Plan an Event</h2>
             <div class="two-col">
-                <form class="panel" id="planform" novalidate>
+                <form class="panel" id="planForm" novalidate>
                     <div class="form-grid">
                         <div>
                             <label for="evName">Event Name:</label>
@@ -176,7 +175,7 @@
             <h2 id="sch-h">Schedule and conflicts</h2>
             <div class="stats" id="stats"></div>
             <div id="clashBox"></div>
-            <div class="tablewrap">
+            <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
